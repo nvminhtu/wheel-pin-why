@@ -36,6 +36,8 @@
        game.add.sprite(0, 0, 'hinhnenbien');
        ninja = game.add.sprite( game.world.centerX, game.world.centerY , 'ninja');
        ninja.anchor.setTo(0.5);
+       ninja.scale.setTo(0.5);
+
        music = game.add.audio('amthanhbien');
        music.onDecoded.add(startMusic, this);
 
