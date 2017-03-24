@@ -21,6 +21,7 @@
     var ninja, text,
         counter = 0,
         music;
+    var isPlaying = true;
     // khai báo hàm preload
     // cho load file atlas vào trong game - lần này là file xml
     function preload() {
@@ -44,15 +45,23 @@
        // thêm action touch
        ninja.inputEnabled = true;
        ninja.events.onInputDown.add(listener, this);
+
        music = game.add.audio('amthanhbien');
        music.onDecoded.add(startMusic, this);
 
        // show text on screen
-       text = game.add.text(0,16,'', {fill: '#ffffff' });
+      // text = game.add.text(0,16,'', {fill: '#ffffff' });
     }
 
     function update(){
-      ninja.angle += 1;
+      //ninja.angle += 1;
+      //ninja.body.velocity.x = 0;
+      //ninja.body.velocity.y = 0;
+      //ninja.rotate(1,true);
+      //ninja.rotation += 1;
+      if(isPlaying==true) {
+        ninja.angle += 1;
+      }
     }
     // hàm khởi tạo file âm thanh
     function startMusic() {
@@ -60,8 +69,13 @@
     }
 
     function listener() {
-      counter++;
-      text.text = "Chọc nhột " + counter + " lần!";
+        //ninja.angle = 0;
+        //ninja.fixedRotation = true;
+        if(isPlaying==false) {
+          isPlaying = true;
+        } else {
+          isPlaying = false;
+        }
     }
 
 
