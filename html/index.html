@@ -17,15 +17,16 @@
     // + 1 file âm thanh gió của pinwheel
 
     // Khởi tạo game
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create });
-    var music;
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
+    var ninja,
+        music;
     // khai báo hàm preload
     // cho load file atlas vào trong game - lần này là file xml
     function preload() {
 
       game.load.image('hinhnenbien','pic/undersea.jpg');
       game.load.image('daybien','pic/seabed.png');
-
+      game.load.image('ninja','pic/ninja.png');
       // thêm âm thanh
       game.load.audio('amthanhbien', 'bensound-littleidea.mp3');
     }
@@ -33,19 +34,24 @@
     // thêm các đối tượng vào trong game
     function create() {
        game.add.sprite(0, 0, 'hinhnenbien');
-
+       ninja = game.add.sprite( game.world.centerX, game.world.centerY , 'ninja');
+       ninja.anchor.setTo(0.5);
        music = game.add.audio('amthanhbien');
-       music.onDecoded.add(start, this);
+       music.onDecoded.add(startMusic, this);
 
     }
+
+    function update(){
+      ninja.angle += 1;
+    }
     // hàm khởi tạo file âm thanh
-    function start() {
+    function startMusic() {
       music.fadeIn(2000); // chờ 2 s (bật từ nhỏ tới lớn);
     }
 
     // render - dùng để chạy khi debug
     function render () {
-      
+
     }
     </script>
 
