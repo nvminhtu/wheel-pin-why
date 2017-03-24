@@ -18,7 +18,8 @@
 
     // Khởi tạo game
     var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-    var ninja,
+    var ninja, text,
+        counter = 0,
         music;
     // khai báo hàm preload
     // cho load file atlas vào trong game - lần này là file xml
@@ -34,13 +35,20 @@
     // thêm các đối tượng vào trong game
     function create() {
        game.add.sprite(0, 0, 'hinhnenbien');
+
+       // thêm hình chong chóng hoặc ninja vào game
        ninja = game.add.sprite( game.world.centerX, game.world.centerY , 'ninja');
        ninja.anchor.setTo(0.5);
        ninja.scale.setTo(0.5);
 
+       // thêm action touch
+       ninja.inputEnabled = true;
+       ninja.events.onInputDown.add(listener, this);
        music = game.add.audio('amthanhbien');
        music.onDecoded.add(startMusic, this);
 
+       // show text on screen
+       text = game.add.text(0,16,'', {fill: '#ffffff' });
     }
 
     function update(){
@@ -50,6 +58,12 @@
     function startMusic() {
       music.fadeIn(2000); // chờ 2 s (bật từ nhỏ tới lớn);
     }
+
+    function listener() {
+      counter++;
+      text.text = "Chọc nhột " + counter + " lần!";
+    }
+
 
     // render - dùng để chạy khi debug
     function render () {
