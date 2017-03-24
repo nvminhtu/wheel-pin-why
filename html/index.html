@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>hello phaser!</title>
+        <script src="phaser.min.js"></script>
+    </head>
+    <body>
+
+    <script type="text/javascript">
+    // Game Pin Wheel
+    // #Tạo 1 pin wheel có thể xoay được
+
+    // Cần gì?
+    // + 1 hình background kute
+    // + 1 pinwheel
+    // + 1 file âm thanh gió của pinwheel
+
+    // Khởi tạo game
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create });
+    var music;
+    // khai báo hàm preload
+    // cho load file atlas vào trong game - lần này là file xml
+    function preload() {
+
+      game.load.image('hinhnenbien','pic/undersea.jpg');
+      game.load.image('daybien','pic/seabed.png');
+
+      // thêm âm thanh
+      game.load.audio('amthanhbien', 'bensound-littleidea.mp3');
+    }
+
+    // thêm các đối tượng vào trong game
+    function create() {
+       game.add.sprite(0, 0, 'hinhnenbien');
+
+       music = game.add.audio('amthanhbien');
+       music.onDecoded.add(start, this);
+
+    }
+    // hàm khởi tạo file âm thanh
+    function start() {
+      music.fadeIn(2000); // chờ 2 s (bật từ nhỏ tới lớn);
+    }
+
+    // render - dùng để chạy khi debug
+    function render () {
+      
+    }
+    </script>
+
+    </body>
+</html>
