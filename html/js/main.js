@@ -12,7 +12,7 @@ var winWidth = window.innerWidth,
 
 // Khởi tạo game
 var game = new Phaser.Game(winWidth, winHeight, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-var ninja, text,
+var pinWheeel, text,
     counter = 0,
     music,
     giatoc = 1;
@@ -25,7 +25,7 @@ function preload() {
 
   game.load.image('hinhnenbien','pic/bg-game-screen.png');
   game.load.image('daybien','pic/seabed.png');
-  game.load.image('ninja','pic/pinwheel.png');
+  game.load.image('pinWheeel','pic/pinwheel.png');
 
   // thêm button chỉnh tốc độ
   game.load.image('fast','pic/fast.png');
@@ -40,19 +40,22 @@ function create() {
 
    var hinhnen = game.add.sprite(0, 0, 'hinhnenbien');
    hinhnen.width = winWidth;
+   hinhnen.height = winHeight;
 
+   // các nút action
    var btnFast = game.add.sprite(20, 0, 'fast');
-   var btnMedium = game.add.sprite(20, 80 , 'fast');
-   var btnSlow = game.add.sprite(20, 160 , 'fast');
+       btnMedium = game.add.sprite(20, 80 , 'fast'),
+       btnSlow = game.add.sprite(20, 160 , 'fast'),
+       btnSwitch = game.add.sprite(20, 240 , 'fast');
 
-   // thêm hình chong chóng hoặc ninja vào game
-   ninja = game.add.sprite( game.world.centerX, game.world.centerY , 'ninja');
-   ninja.anchor.setTo(0.5);
-   ninja.scale.setTo(0.5);
+   // thêm hình chong chóng hoặc pinWheeel vào game
+   pinWheeel = game.add.sprite( game.world.centerX, game.world.centerY , 'pinWheeel');
+   pinWheeel.anchor.setTo(0.5);
+   pinWheeel.scale.setTo(0.5);
 
    // thêm action touch
-   ninja.inputEnabled = true;
-   ninja.events.onInputDown.add(listener, this);
+   pinWheeel.inputEnabled = true;
+   pinWheeel.events.onInputDown.add(stopWheeling, this);
 
    // thêm action cho button click
    btnFast.inputEnabled = true;
@@ -64,8 +67,11 @@ function create() {
    btnSlow.inputEnabled = true;
    btnSlow.events.onInputDown.add(setAcceleration, {param1: 2 } );
 
+   btnSwitch.inputEnabled = true;
+   btnSwitch.events.onInputDown.add(stopWheeling, this );
+
    // thêm touch cho toàn game
-   //game.input.onDown.add(listener, this);
+   //game.input.onDown.add(stopWheeling, this);
 
    music = game.add.audio('amthanhbien');
    //music.onDecoded.add(startMusic, this);
@@ -76,7 +82,7 @@ function create() {
 
 function update(){
   if(isPlaying==true) {
-    ninja.angle += giatoc;
+    pinWheeel.angle += giatoc;
     //setTimer();
   }
 }
@@ -89,23 +95,23 @@ function setTimer() {
     setInterval(function () {
         if(timeout<5) {
           timeout++;
-          console.log(timeout);
         }
     }, 1000);
 
     if(timeout < 4) {
-      ninja.angle += 1;
+      pinWheeel.angle += 1;
     } else {
-      ninja.angle += 5;
+      pinWheeel.angle += 5;
     }
 }
 
-// hàm khởi tạo file âm thanh
+// #sound: khởi tạo file âm thanh
 function startMusic() {
   music.fadeIn(2000); // chờ 2 s (bật từ nhỏ tới lớn);
 }
 
-function listener() {
+// #condition: ngừng thiết lập quay chong chóng
+function stopWheeling() {
     if(isPlaying==false) {
       isPlaying = true;
     } else {
@@ -113,6 +119,7 @@ function listener() {
     }
 }
 
+// #thiết lập gia tốc
 function setAcceleration() {
   giatoc = this.param1;
 }
