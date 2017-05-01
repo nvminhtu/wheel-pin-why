@@ -37,10 +37,10 @@ function preload() {
 function create() {
 
    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
-   var hinhnen = game.add.sprite(0, 0, 'hinhnenbien');
-   hinhnen.width = winWidth;
-   hinhnen.height = winHeight;
+   game.stage.backgroundColor = '#FF9BC9';
+  //  var hinhnen = game.add.sprite(0, 0, 'hinhnenbien');
+  //  hinhnen.width = winWidth;
+  //  hinhnen.height = winHeight;
 
    // các nút action
    var btnFast = game.add.sprite(20, 0, 'fast');
@@ -48,7 +48,7 @@ function create() {
        btnSlow = game.add.sprite(20, 160 , 'fast'),
        btnSwitch = game.add.sprite(20, 240 , 'fast');
 
-   // thêm hình chong chóng hoặc pinWheeel vào game
+   // thêm hình chong chóng / pinWheeel vào game
    pinWheeel = game.add.sprite( game.world.centerX, game.world.centerY , 'pinWheeel');
    pinWheeel.anchor.setTo(0.5);
    pinWheeel.scale.setTo(0.5);
